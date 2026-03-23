@@ -10,7 +10,7 @@ Write-Host @"
 "@ -ForegroundColor Yellow
 
 Write-Host ""
-Write-Host "PT CHECKER v3.0 (Быстрая версия)" -ForegroundColor Cyan
+Write-Host "PT CHECKER v3.0" -ForegroundColor Cyan
 Write-Host "Все права защищены PT" -ForegroundColor White
 Write-Host ""
 
