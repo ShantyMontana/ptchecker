@@ -10,7 +10,7 @@ Write-Host @"
 "@ -ForegroundColor Yellow
 
 Write-Host ""
-Write-Host "PT CHECKER v3.0" -ForegroundColor Cyan
+Write-Host "PT CHECKER v3.1 (Быстрая версия)" -ForegroundColor Cyan
 Write-Host "Все права защищены PT" -ForegroundColor White
 Write-Host ""
 
@@ -53,6 +53,7 @@ $fastPaths = @(
 
 $found = @()
 $totalChecked = 0
+$totalNames = $names.Count
 
 foreach ($path in $fastPaths) {
     if (Test-Path $path) {
@@ -60,7 +61,7 @@ foreach ($path in $fastPaths) {
         
         foreach ($name in $names) {
             $results = @()
-            # Поиск .exe файлов и папок (только на 1 уровень глубины, быстрее)
+            # Поиск .exe файлов и папок
             $results += Get-ChildItem -Path $path -Filter "$name*.exe" -ErrorAction SilentlyContinue -Recurse 2>$null
             $results += Get-ChildItem -Path $path -Filter "*$name*.exe" -ErrorAction SilentlyContinue -Recurse 2>$null
             $results += Get-ChildItem -Path $path -Directory -Filter "*$name*" -ErrorAction SilentlyContinue -Recurse 2>$null
@@ -74,9 +75,8 @@ foreach ($path in $fastPaths) {
             }
             $totalChecked++
             
-            # Прогресс
-            $percent = [math]::Round(($totalChecked / $names.Count) * 100)
-            Write-Progress -Activity "Проверка читов" -Status "Обработано: $totalChecked из $($names.Count)" -PercentComplete $percent
+            # Простой индикатор (без процентов)
+            Write-Host "  Проверено: $totalChecked из $totalNames" -ForegroundColor Gray
         }
     }
 }
